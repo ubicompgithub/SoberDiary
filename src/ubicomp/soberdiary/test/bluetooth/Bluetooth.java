@@ -540,6 +540,7 @@ public class Bluetooth {
 	/** Parse the message */
 	protected boolean parseMsg(String msg) throws Exception {
 		synchronized (lock) {
+			Log.d(TAG,"msg="+msg);
 			if (msg == "")
 				;// Do nothing
 			else if (msg.charAt(0) == 'a') { // Alcohol
