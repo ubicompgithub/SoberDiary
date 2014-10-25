@@ -9,6 +9,7 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpConnectionParams;
 
 import ubicomp.soberdiary.main.App;
 import ubicomp.soberdiary.main.R;
@@ -37,6 +38,7 @@ public class HttpSecureClientGenerator {
 			Scheme sch = new Scheme("https", socketFactory, 443);
 			httpClient.getConnectionManager().getSchemeRegistry().register(sch);
 			httpClient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 		} catch (Exception e) {
 		} finally {
 			try {
