@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.security.KeyStore;
 
 
+
 import ubicomp.soberdiary.main.R;
 import ubicomp.soberdiary.system.uploader.ServerUrl;
 import ubicomp.soberdiary.data.structure.Rank;
@@ -20,6 +21,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 
+
+import org.apache.http.params.HttpConnectionParams;
 
 import android.content.Context;
 
@@ -56,6 +59,7 @@ public class UserLevelCollector {
 		
 			HttpPost httpPost = new HttpPost(SERVER_URL_RANK_ALL);
 			httpClient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 			
 			HttpResponse httpResponse;
 			httpResponse = httpClient.execute(httpPost);
@@ -92,6 +96,7 @@ public class UserLevelCollector {
 		
 			HttpPost httpPost = new HttpPost(SERVER_URL_RANK_WEEK);
 			httpClient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 3000);
 			
 			HttpResponse httpResponse;
 			httpResponse = httpClient.execute(httpPost);
