@@ -155,7 +155,7 @@ public class StorytellingFragment extends Fragment implements EnablePage,
 	private Point[] page_update_pos = new Point[16];
 
 	// private static final String TAG = "STORYTELLING";
-
+	
 	private int notify_action = 0;
 
 	@Override
@@ -264,7 +264,6 @@ public class StorytellingFragment extends Fragment implements EnablePage,
 
 		BarInitTask task = new BarInitTask();
 		task.execute();
-
 		return view;
 	}
 

@@ -90,6 +90,7 @@ public class Bluetooth {
 	protected final static int READ_SERIAL = 4;
 
 	protected Object lock = new Object();
+	protected Object closeLock = new Object();
 	protected BluetoothUIHandler btUIHandler;
 
 	protected int imageCount;
@@ -144,6 +145,7 @@ public class Bluetooth {
 	protected OutputStream out;
 
 	protected boolean connected = false;
+	
 
 	/**
 	 * Constructor
@@ -196,7 +198,7 @@ public class Bluetooth {
 		if (!btAdapter.isEnabled()) {
 			btEnabledBeforeStart = false;
 			btAdapter.enable();
-			int state = btAdapter.getState();
+			int state = btAdapter.getState();  // Possible return values are STATE_OFF, STATE_TURNING_ON, STATE_ON, STATE_TURNING_OFF.
 			while (state != BluetoothAdapter.STATE_ON) {
 				try {
 					Thread.sleep(100);
@@ -708,38 +710,44 @@ public class Bluetooth {
 
 	/** close Bluetooth */
 	protected void close() {
-		sendEnd();
-
-		try {
-			if (in != null)
-				in.close();
-		} catch (Exception e) {
-			Log.e(TAG, "FAIL TO CLOSE THE SENSOR INPUTSTREAM");
-		}
-		try {
-			if (out != null)
-				out.close();
-		} catch (Exception e) {
-			Log.e(TAG, "FAIL TO CLOSE THE SENSOR OUTPUTSTREAM");
-		}
-		try {
-			if (socket != null) {
-				socket.close();
+	    synchronized(closeLock){
+			sendEnd();
+			try {
+				if (in != null){
+					in.close();
+					in = null;
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "FAIL TO CLOSE THE SENSOR INPUTSTREAM");
 			}
-		} catch (Exception e) {
-			Log.e(TAG, "FAIL TO CLOSE THE SENSOR");
-		}
-		if (bracFileHandler != null)
-			bracFileHandler.close();
-
-		try {
-			if (!btEnabledBeforeStart) {
-				btAdapter.disable();
+			try {
+				if (out != null){
+					out.close();
+					out = null;
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "FAIL TO CLOSE THE SENSOR OUTPUTSTREAM");
 			}
-		} catch (Exception e) {
+			try {
+				if (socket != null) {
+					socket.close();
+					socket=null;
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "FAIL TO CLOSE THE SENSOR");
+			}
+			if (bracFileHandler != null){
+				bracFileHandler.close();
+			}
+			try {
+				if (!btEnabledBeforeStart) {
+					btAdapter.disable();
+				}
+			} catch (Exception e) {
+			}
+			;
 		}
-		;
-	}
+    }
 
 	/** close Bluetooth if the test failed */
 	public void closeFail() {

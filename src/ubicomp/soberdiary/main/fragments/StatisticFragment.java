@@ -72,7 +72,7 @@ public class StatisticFragment extends Fragment implements ShowRadarChart, Quest
 	private int notify_action = 0;
 	
 	//private static final String TAG = "STATISTIC";
-	
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,6 +113,7 @@ public class StatisticFragment extends Fragment implements ShowRadarChart, Quest
 
 	public void onResume() {
 		super.onResume();
+		
 		ClickLog.Log(ClickLogId.STATISTIC_ENTER);
 		enablePage(true);
 		statisticFragment = this;

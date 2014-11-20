@@ -81,6 +81,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+
 public class TestFragment extends Fragment implements GPSInterface, TestQuestionCaller, BluetoothDebugger,
 		BluetoothMessageUpdater, BluetoothCaller, CameraCaller, EnablePage, NotificationDialogCaller, FeedbackDialogCaller {
 
@@ -175,8 +176,7 @@ public class TestFragment extends Fragment implements GPSInterface, TestQuestion
 	private Animation startButtonAnimation = AnimationUtils.loadAnimation(App.getContext(),
 			R.anim.animation_start_button);
 
-	
-	
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

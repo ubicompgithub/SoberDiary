@@ -44,6 +44,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+
 /**
  * Main activity of SoberDiary. This activity contains the three functions -
  * test, statistic, and storytelling.
@@ -99,6 +100,7 @@ public class MainActivity extends FragmentActivity {
 
 	public static final int ACTION_RECORD = 1;
 	public static final int ACTION_QUESTIONNAIRE = 2;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -290,11 +292,9 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public void onTabChanged(String tabId) {
-
 			if (lastTabId.equals(tabId))
 				return;
 			ft = fm.beginTransaction();
-
 			int lastTabPos = 0, tabPos = 0;
 			for (int i = 0; i < fragments.length; ++i) {
 				if (lastTabId.equals(tabName[i]))
@@ -302,15 +302,12 @@ public class MainActivity extends FragmentActivity {
 				else if (tabId.equals(tabName[i]))
 					tabPos = i;
 			}
-
 			if (Build.VERSION.SDK_INT >= 11)
 				if (lastTabPos < tabPos)
 					ft.setCustomAnimations(R.anim.animation_right_enter, R.anim.animation_left_exit);
 				else
 					ft.setCustomAnimations(R.anim.animation_left_enter, R.anim.animation_right_exit);
-
 			LoadingDialogControl.show(MainActivity.this);
-
 			setTimers();
 			if (tabId.equals(tabName[0])) {
 				ClickLog.Log(ClickLogId.TAB_TEST);
@@ -325,7 +322,6 @@ public class MainActivity extends FragmentActivity {
 				customTabs[1].showHighlight(PreferenceControl.getCouponChange());
 				customTabs[2].showHighlight(false);
 			}
-
 			for (int i = 0; i < fragments.length; ++i) {
 				if (fragments[i] != null)
 					ft.detach(fragments[i]);
@@ -347,7 +343,6 @@ public class MainActivity extends FragmentActivity {
 						}
 						newFragment = true;
 					}
-
 					if (notify_action == ACTION_RECORD) {
 						Bundle data = new Bundle();
 						data.putInt("action", notify_action);
@@ -376,7 +371,6 @@ public class MainActivity extends FragmentActivity {
 					break;
 				}
 			}
-
 			lastTabId = tabId;
 			setTabState(tabId);
 			ft.commit();
